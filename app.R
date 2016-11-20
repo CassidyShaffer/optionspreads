@@ -8,24 +8,24 @@ ui <- sidebarLayout(
       
       conditionalPanel(
         condition = "input.Types == 'Protective Put'",
-        selectInput("Types","Types:", c("BUY","SELL")),
-        selectInput("Types","Types:", c("CALL","PUT","STOCK")),
-        numericInput("dollars", "Price($)", 0, min = 0, max = 3000),
-        selectInput("Types","Types:", c("BUY","SELL")),
-        selectInput("Types","Types:", c("CALL","PUT","STOCK")),
-        numericInput("dollars", "Skrike($)", 0, min = 0, max = 3000),
-        numericInput("dollars", "Price($)", 0, min = 0, max = 3000)
+        selectInput("TypesA1","Types:", c("BUY","SELL")),
+        selectInput("TypesB1","Types:", c("CALL","PUT","STOCK")),
+        numericInput("dollarsA1", "Price($)", 0, min = 0, max = 3000),
+        selectInput("TypesC1","Types:", c("BUY","SELL")),
+        selectInput("TypesD1","Types:", c("CALL","PUT","STOCK")),
+        numericInput("dollarsB1", "Skrike($)", 0, min = 0, max = 3000),
+        numericInput("dollarsC1", "Price($)", 0, min = 0, max = 3000)
       ),
       
       conditionalPanel(
         condition = "input.Types == 'Covered Call'",
-        selectInput("Types","Types:", c("BUY","SELL")),
-        selectInput("Types","Types:", c("CALL","PUT","STOCK")),
-        numericInput("dollars", "Price($)", 0, min = 0, max = 3000),
-        selectInput("Types","Types:", c("BUY","SELL")),
-        selectInput("Types","Types:", c("CALL","PUT","STOCK")),
-        numericInput("dollars", "Skrike($)", 0, min = 0, max = 3000),
-        numericInput("dollars", "Price($)", 0, min = 0, max = 3000)
+        selectInput("TypesA2","Types:", c("BUY","SELL")),
+        selectInput("TypesB2","Types:", c("CALL","PUT","STOCK")),
+        numericInput("dollarsA2", "Price($)", 0, min = 0, max = 3000),
+        selectInput("TypesC2","Types:", c("BUY","SELL")),
+        selectInput("TypesD2","Types:", c("CALL","PUT","STOCK")),
+        numericInput("dollarsB2", "Skrike($)", 0, min = 0, max = 3000),
+        numericInput("dollarsC2", "Price($)", 0, min = 0, max = 3000)
       ),
       
       conditionalPanel(
