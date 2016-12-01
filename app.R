@@ -8,9 +8,9 @@ ui <- sidebarLayout(
       
       conditionalPanel(
         condition = "input.Types == 'Protective Put'",
-        numericInput("dollarsA1", "Buy Stock Price($)", 0, min = 0, max = 3000),
-        numericInput("dollarsB1", "Buy Put Option Skrike($)", 0, min = 0, max = 3000),
-        numericInput("dollarsC1", "Buy Put Option Price($)", 0, min = 0, max = 3000)
+        numericInput("dollarsA1", "Buy Stock Price($)", value = 100, min = 0, max = 200),
+        numericInput("dollarsB1", "Buy Put Option Strike($)", value = 90, min = 0, max = 200),
+        numericInput("dollarsC1", "Buy Put Option Price($)", value = 4, min = 0, max = 200)
       ),
       
       conditionalPanel(
@@ -72,9 +72,17 @@ ui <- sidebarLayout(
       )
 server <- function(input, output) {
   output$thePlot <- renderPlot({
-    
-    # Render a plot
-plot(rnorm(100))
+      stock <- 0:200
+      profitStock <- stock - input$dollarsA1
+      profitOption <- ifelse(input$dollarsB1 > stock, input$dollarsB1 - stock, 0) - input$dollarsC1
+      profitPP <- profitStock + profitOption
+      maxGainPP <- max(profitPP)
+      maxLossPP <- min(profitPP)
+      plot(profitStock, type = 'l')
+      lines(profitOption)
+      lines(profitPP, col = 3)
+      legend('topleft', c(paste0("Max Gain = ", round(maxGainPP, 2)), paste0("Max Loss = ", round(maxLossPP, 2))))
+      
 
   })
 }
