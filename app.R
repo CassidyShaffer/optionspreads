@@ -73,7 +73,7 @@ ui <- sidebarLayout(
 server <- function(input, output) {
   output$thePlot <- renderPlot({
     stock <- 0:200
-    if(input$type == "PP"){
+    if(input$Types == "PP"){
       profitStock <- stock - input$stockpricePP
       profitOption <- ifelse(input$putstrikePP > stock, input$putstrikePP - stock, 0) - input$putpricePP
       profitPP <- profitStock + profitOption
@@ -84,9 +84,9 @@ server <- function(input, output) {
       lines(profitPP, col = 3)
       legend('topleft', c(paste0("Max Gain = ", round(maxGainPP, 2)), paste0("Max Loss = ", round(maxLossPP, 2))))
   
-      }
-    else{
-      if(input$type == "CC"){
+      } else {
+        
+      if(input$Types == "CC"){
       profitStock <- stock - input$stockpriceCC
       profitOption <- ifelse(input$callstrikeCC < stock, input$callstrikeCC - stock, 0) + input$callpriceCC
       profitCC <- profitStock + profitOption
@@ -96,11 +96,10 @@ server <- function(input, output) {
       lines(profitOption)
       lines(profitCC, col = 3)
       legend('topleft', c(paste0("Max Gain = ", round(maxGainCC, 2)), paste0("Max Loss = ", round(maxLossCC, 2))))
-      }
-    }
-    
-    else{
-      if(input$type == "CO"){
+      
+      } else {
+        
+      if(input$Types == "CO"){
       profitStock <- stock - input$stockpriceCO
       profitOption <- ifelse(input$callstrikeCO < stock, input$callstrikeCO - stock, 0) - (input$putpriceCO - input$callpriceCO)
       profitOption1 <- ifelse(input$callpriceCO > stock, input$callpriceCO - stock, 0) - (input$callpriceCO - input$putpriceCO)
@@ -112,11 +111,10 @@ server <- function(input, output) {
       lines(profitOption)
       lines(profitCO, col = 3)
       legend('topleft', c(paste0("Max Gain = ", round(maxGainCO, 2)), paste0("Max Loss = ", round(maxLossCO, 2))))
-      }
-    }
-    
-    else{ 
-      if(input$type == "Bull"){
+  
+      } else { 
+        
+      if(input$Types == "Bull"){
       profitOption <- ifelse(input$call2strikebull > stock, input$call2strikebull - input$call1strikebull, 0) - (input$call2price - input$call1price)
       profitOption1 <- ifelse(input$call1strikebull < stock, input$call1strikebull - input$call2strikebull, 0) - (input$call1price - input$call2price)
       profitBull <- profitOption + profitOption1
@@ -126,11 +124,10 @@ server <- function(input, output) {
       lines(profitOption)
       lines(profitPP, col = 3)
       legend('topleft', c(paste0("Max Gain = ", round(maxGainBull, 2)), paste0("Max Loss = ", round(maxLossBull, 2))))
-      }
-    }
-    
-    else{
-      if(input$type == "Bear"){
+      
+      }else {
+        
+      if(input$Types == "Bear"){
         profitOption <- ifelse(input$call2strikebull > stock, input$call2strikebull - input$call1strikebull, 0) - (input$call2price - input$call1price)
         profitOption1 <- ifelse(input$call1strikebull < stock, input$call1strikebull - input$call2strikebull, 0) - (input$call1price - input$call2price)
         profitBull <- profitOption + profitOption1
@@ -140,11 +137,14 @@ server <- function(input, output) {
         lines(profitOption)
         lines(profitPP, col = 3)
         legend('topleft', c(paste0("Max Gain = ", round(maxGainBull, 2)), paste0("Max Loss = ", round(maxLossBull, 2))))
-      }
-    }
-    else{
-      if(input$type =="S"){
-      }
+      
+        }
+#         else{
+# #       
+# #           if(input$Types =="S"){
+        }
+       }
+      }  
     }
  }) 
 } 
