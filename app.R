@@ -34,7 +34,7 @@ ui <- sidebarLayout(
         numericInput("call1strikeBull", "Buy Call Option Skrike", value = 100, min = 0, max = 200),
         numericInput("call1priceBull", "Buy Call Option Price", value = 6, min = 0, max = 200),
         numericInput("call2strikeBull", "Sell Call Option Skrike", value = 110, min = 0, max = 200),
-        numericInput("call2strikeBull", "Sell Call Option Price", value = 3, min = 0, max = 200)
+        numericInput("call2priceeBull", "Sell Call Option Price", value = 3, min = 0, max = 200)
       ),
       
       conditionalPanel(
@@ -102,11 +102,11 @@ server <- function(input, output) {
       if(input$Types == "CO"){
       profitStock <- stock - input$stockpriceCO
       profitOption <- ifelse(input$callstrikeCO < stock, input$callstrikeCO - stock, 0) - (input$putpriceCO - input$callpriceCO)
-      profitOption1 <- ifelse(input$callpriceCO > stock, input$callpriceCO - stock, 0) - (input$callpriceCO - input$putpriceCO)
+      profitOption1 <- ifelse(input$putstrikeCO > stock, stock - input$putstikeCO, 0) + (input$putpriceCO - input$callpriceCO)
       profitCO <- profitStock + profitOption
-      profit1CO <- profitStock + profitOption1
+      profit1CO <-profitStock + profitOption1
       maxGainCO <- max(profitCO)
-      maxLossCO <- min(profitCO)
+      maxLossCO <- min(profit1CO)
       plot(profitStock, type = 'l')
       lines(profitOption)
       lines(profitCO, col = 3)
@@ -115,33 +115,43 @@ server <- function(input, output) {
       } else { 
         
       if(input$Types == "Bull"){
-      profitOption <- ifelse(input$call2strikebull > stock, input$call2strikebull - input$call1strikebull, 0) - (input$call2price - input$call1price)
-      profitOption1 <- ifelse(input$call1strikebull < stock, input$call1strikebull - input$call2strikebull, 0) - (input$call1price - input$call2price)
+      profitOption <- ifelse(input$call2strikeBull > stock, input$call2strikeBull - input$call1strikeBull, 0) - (input$call2priceBull - input$call1priceBull)
+      profitOption1 <- ifelse(input$call1strikeBull < stock, input$call1strikeBull - input$call2strikeBull, 0) - (input$call1priceBull - input$call2priceBull)
       profitBull <- profitOption + profitOption1
       maxGainBull <- max(profitBull)
       maxLossBull <- min(profitBull)
-      plot(profitStock, type = 'l')
+    
       lines(profitOption)
       lines(profitPP, col = 3)
       legend('topleft', c(paste0("Max Gain = ", round(maxGainBull, 2)), paste0("Max Loss = ", round(maxLossBull, 2))))
       
-      }else {
+      } else {
         
       if(input$Types == "Bear"){
-        profitOption <- ifelse(input$call2strikebull > stock, input$call2strikebull - input$call1strikebull, 0) - (input$call2price - input$call1price)
-        profitOption1 <- ifelse(input$call1strikebull < stock, input$call1strikebull - input$call2strikebull, 0) - (input$call1price - input$call2price)
-        profitBull <- profitOption + profitOption1
-        maxGainBull <- min(profitBull)
-        maxLossBull <- max(profitBull)
+        profitOption <- ifelse(input$call2strikeBear > input$cal1strikeBear, input$call2strikeBear - input$call1strikeBear, 0) - (input$call2priceBear - input$call1priceBear)
+        profitOption1 <- ifelse(input$call1strikeBear < input$call2strikeBear, input$call1strikeBear - input$call2strikeBear, 0) - (input$call1priceBear - input$call2priceBear)
+        profitBear <- profitOption + profitOption1
+        maxGainBear <- min(profitBear)
+        maxLossBear <- max(profitBear)
         plot(profitStock, type = 'l')
         lines(profitOption)
         lines(profitPP, col = 3)
-        legend('topleft', c(paste0("Max Gain = ", round(maxGainBull, 2)), paste0("Max Loss = ", round(maxLossBull, 2))))
+        legend('topleft', c(paste0("Max Gain = ", round(maxGainBear, 2)), paste0("Max Loss = ", round(maxLossBear, 2))))
       
-        }
-#         else{
-# #       
-# #           if(input$Types =="S"){
+      } 
+#         else {
+#         
+#       if(input$Types == "S"){
+#         profitOption <-
+#         profitOption1 <-
+#         profitS <- 
+#         maxGainS <-
+#         maxLossS <-
+#         
+#         
+#            }
+#           }
+        
         }
        }
       }  
