@@ -120,7 +120,7 @@ server <- function(input, output) {
       profitBull <- profitOption + profitOption1
       maxGainBull <- max(profitBull)
       maxLossBull <- min(profitBull)
-    
+      plot(profitStock, type = 'l')
       lines(profitOption)
       lines(profitPP, col = 3)
       legend('topleft', c(paste0("Max Gain = ", round(maxGainBull, 2)), paste0("Max Loss = ", round(maxLossBull, 2))))
